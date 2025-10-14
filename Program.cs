@@ -1,6 +1,10 @@
 using LotoApp.Data;
 using Microsoft.EntityFrameworkCore;
 using DotNetEnv;
+using Auth0.AspNetCore.Authentication;
+using LotoApp.Repositories;
+using LotoApp.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 Env.Load();
 
@@ -21,6 +25,16 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddAuth0WebAppAuthentication(options =>
+{
+    options.Domain = Environment.GetEnvironmentVariable("AUTH0_DOMAIN")!;
+    options.ClientId = Environment.GetEnvironmentVariable("AUTH0_CLIENT_ID")!;
+    options.ClientSecret = Environment.GetEnvironmentVariable("AUTH0_CLIENT_SECRET")!;
+});
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<AuthService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -36,6 +50,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
