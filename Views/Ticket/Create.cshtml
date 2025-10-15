@@ -1,0 +1,31 @@
+﻿@model LotoApp.Models.TicketCreateViewModel
+
+@{
+    ViewData["Title"] = "Buy Ticket";
+}
+
+<div class="container mt-4">
+    <h2>Buy a Loto Ticket</h2>
+
+    <form asp-action="Create" method="post">
+        <div class="mb-3">
+            <label asp-for="DocumentNumber" class="form-label"></label>
+            <input asp-for="DocumentNumber" class="form-control" />
+            <span asp-validation-for="DocumentNumber" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="SelectedNumbers" class="form-label"></label>
+            <input asp-for="SelectedNumbers" class="form-control" />
+            <span asp-validation-for="SelectedNumbers" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Generate QR Code</button>
+    </form>
+
+    <div asp-validation-summary="All" class="text-danger mt-3"></div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,8 +1,38 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model LotoApp.Models.HomeViewModel
+
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-4">
+    <h2>Welcome @Model.UserEmail</h2>
+
+    @if (!string.IsNullOrEmpty(Model.UserEmail))
+    {
+        <a class="btn btn-outline-secondary mb-3" href="/Account/Logout">Logout</a>
+    }
+    else
+    {
+        <a class="btn btn-primary mb-3" href="/Account/Login">Login</a>
+    }
+
+    <p><strong>Tickets sold in current round:</strong> @Model.TicketCount</p>
+
+    @if (!string.IsNullOrEmpty(Model.DrawnNumbers))
+    {
+        <p><strong>Drawn numbers:</strong> @Model.DrawnNumbers</p>
+    }
+    else
+    {
+        <p><em>Numbers not drawn yet.</em></p>
+    }
+
+    @if (Model.IsRoundActive)
+    {
+        <a asp-controller="Ticket" asp-action="Create" class="btn btn-primary mt-3">Buy a ticket</a>
+    }
+    else
+    {
+        <p><em>Ticket sales are currently closed.</em></p>
+    }
 </div>

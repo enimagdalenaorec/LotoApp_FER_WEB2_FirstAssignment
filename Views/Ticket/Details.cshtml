@@ -1,0 +1,32 @@
+﻿@model dynamic
+
+@{
+    ViewData["Title"] = "Ticket Details";
+}
+
+<div class="container mt-4">
+    <h2>Ticket Details</h2>
+
+    <p><strong>Document Number:</strong> @Model.DocumentNumber</p>
+    <p><strong>Selected Numbers:</strong> @Model.SelectedNumbers</p>
+
+    @if (!string.IsNullOrEmpty(Model.DrawnNumbers))
+    {
+        <p><strong>Drawn Numbers:</strong> @Model.DrawnNumbers</p>
+    }
+    else
+    {
+        <p><em>Numbers not drawn yet.</em></p>
+    }
+
+    @if (Model.IsActive == true)
+    {
+        <p><span class="badge bg-success">Round Active</span></p>
+    }
+    else
+    {
+        <p><span class="badge bg-secondary">Round Closed</span></p>
+    }
+
+    <a class="btn btn-outline-primary mt-3" href="/">Back to Home</a>
+</div>
