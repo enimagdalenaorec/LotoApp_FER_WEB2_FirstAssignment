@@ -63,7 +63,7 @@ namespace LotoApp.Services
             return await _ticketRepository.GetByUuidAsync(uuid);
         }
 
-        private byte[] GenerateQrCode(string content)
+        public byte[] GenerateQrCode(string content)
         {
             using var qrGenerator = new QRCodeGenerator();
             using var qrData = qrGenerator.CreateQrCode(content, QRCodeGenerator.ECCLevel.Q);

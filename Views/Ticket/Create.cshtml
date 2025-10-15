@@ -16,14 +16,16 @@
 
         <div class="mb-3">
             <label asp-for="SelectedNumbers" class="form-label"></label>
-            <input asp-for="SelectedNumbers" class="form-control" />
+            <input asp-for="SelectedNumbers" class="form-control" placeholder="e.g. 3,7,15,22,34,41" />
             <span asp-validation-for="SelectedNumbers" class="text-danger"></span>
         </div>
 
-        <button type="submit" class="btn btn-primary">Generate QR Code</button>
+        <button type="submit" class="btn btn-success">Create Ticket</button>
     </form>
 
     <div asp-validation-summary="All" class="text-danger mt-3"></div>
+
+    <a asp-controller="Home" asp-action="Index" class="btn btn-link mt-3">Back to Home</a>
 </div>
 
 @section Scripts {

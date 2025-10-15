@@ -50,7 +50,7 @@ namespace LotoApp.Controllers
                 return View(model);
             }
 
-            return File(qrBytes!, "image/png");
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: /Ticket/{uuid}
@@ -73,6 +73,18 @@ namespace LotoApp.Controllers
             };
 
             return View("Details", model);
+        }
+
+        [HttpGet("/Ticket/QR/{uuid}")]
+        public async Task<IActionResult> GetQr(string uuid)
+        {
+            var ticket = await _ticketService.GetTicketByUuidAsync(uuid);
+            if (ticket == null)
+                return NotFound();
+
+            var qrUrl = $"https://localhost:7271/Ticket/{ticket.UUID}";
+            var qrBytes = _ticketService.GenerateQrCode(qrUrl);
+            return File(qrBytes, "image/png");
         }
     }
 }

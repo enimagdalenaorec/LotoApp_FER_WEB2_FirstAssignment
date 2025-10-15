@@ -8,5 +8,6 @@ namespace LotoApp.Repositories
         Task AddAsync(Ticket ticket);
         Task SaveChangesAsync();
         Task<Round?> GetActiveRoundAsync();
+        Task<IEnumerable<Ticket>> GetTicketsByUserIdAsync(Guid userId);
     }
 }

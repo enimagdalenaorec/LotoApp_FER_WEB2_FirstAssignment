@@ -34,5 +34,14 @@ namespace LotoApp.Repositories
         {
             return await _context.Rounds.FirstOrDefaultAsync(r => r.IsActive);
         }
+
+        public async Task<IEnumerable<Ticket>> GetTicketsByUserIdAsync(Guid userId)
+        {
+            return await _context.Tickets
+                .Include(t => t.Round)
+                .Where(t => t.UserId == userId)
+                .OrderByDescending(t => t.Id)
+                .ToListAsync();
+        }
     }
 }
