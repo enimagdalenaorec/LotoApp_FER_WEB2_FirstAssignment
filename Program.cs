@@ -34,6 +34,8 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<IRoundRepository, RoundRepository>();
+builder.Services.AddScoped<RoundService>();
 
 var app = builder.Build();
 
