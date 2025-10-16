@@ -4,7 +4,7 @@ using DotNetEnv;
 using Auth0.AspNetCore.Authentication;
 using LotoApp.Repositories;
 using LotoApp.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 Env.Load();
 
@@ -22,7 +22,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddAuth0WebAppAuthentication(options =>
@@ -31,6 +30,13 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
     options.ClientId = Environment.GetEnvironmentVariable("AUTH0_CLIENT_ID")!;
     options.ClientSecret = Environment.GetEnvironmentVariable("AUTH0_CLIENT_SECRET")!;
 });
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {           // for m2m auth0 flow for admin endpoints
+        options.Authority = "https://dev-r72sm216mqp1z7np.us.auth0.com/";
+        options.Audience = "https://lotoapi";
+    });
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<AuthService>();

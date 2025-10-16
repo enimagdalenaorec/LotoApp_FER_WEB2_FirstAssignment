@@ -1,10 +1,13 @@
 ﻿using LotoApp.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LotoApp.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
-    [Route("[controller]")]
+    //[Route("[controller]")]
     public class AdminController : ControllerBase
     {
         private readonly RoundService _roundService;
