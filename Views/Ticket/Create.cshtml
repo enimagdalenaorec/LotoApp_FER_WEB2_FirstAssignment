@@ -10,7 +10,7 @@
     <form asp-action="Create" method="post">
         <div class="mb-3">
             <label asp-for="DocumentNumber" class="form-label"></label>
-            <input asp-for="DocumentNumber" class="form-control" />
+            <input asp-for="DocumentNumber" class="form-control" maxlength="20"/>
             <span asp-validation-for="DocumentNumber" class="text-danger"></span>
         </div>
 
