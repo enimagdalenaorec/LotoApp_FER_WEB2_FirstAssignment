@@ -11,10 +11,10 @@ IMPORTANT: “The real credentials will be provided privately; replace the placeho
 Admin adds, closes rounds and gives drawn numbers with curl commands (all commands are for CMD):
 
 1) Add a round:
-curl -i -X POST https://localhost:7271/new-round -H "Authorization: Bearer example_token"
+curl -i -X POST https://lotoapp-fer-web2-firstassignment.onrender.com/new-round -H "Authorization: Bearer example_token"
 
 2) Close a round:
-curl -i -X POST https://localhost:7271/close -H "Authorization: Bearer example_token"
+curl -i -X POST https://lotoapp-fer-web2-firstassignment.onrender.com/close -H "Authorization: Bearer example_token"
 
 3) Gives drawn numbers (List of int values):
-curl -i -X POST https://localhost:7271/store-results -H "Authorization: Bearer example_token" -H "Content-Type: application/json" -d "{\"numbers\":[5,12,27,34,41,40]}"
+curl -i -X POST https://lotoapp-fer-web2-firstassignment.onrender.com/store-results -H "Authorization: Bearer example_token" -H "Content-Type: application/json" -d "{\"numbers\":[5,12,27,34,41,40]}"
