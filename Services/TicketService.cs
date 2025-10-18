@@ -1,7 +1,6 @@
 ﻿using LotoApp.Models;
 using LotoApp.Repositories;
 using QRCoder;
-using SkiaSharp;
 
 namespace LotoApp.Services
 {
@@ -67,38 +66,8 @@ namespace LotoApp.Services
         {
             using var qrGenerator = new QRCodeGenerator();
             using var qrData = qrGenerator.CreateQrCode(content, QRCodeGenerator.ECCLevel.Q);
-            using var qrCode = new QRCode(qrData);
-
-            // Create a SKBitmap
-            int pixelsPerModule = 20;
-            int size = qrData.ModuleMatrix.Count * pixelsPerModule;
-            var bitmap = new SKBitmap(size, size);
-
-            using (var canvas = new SKCanvas(bitmap))
-            {
-                canvas.Clear(SKColors.White);
-
-                using var paint = new SKPaint
-                {
-                    Style = SKPaintStyle.Fill,
-                    Color = SKColors.Black
-                };
-
-                for (int y = 0; y < qrData.ModuleMatrix.Count; y++)
-                {
-                    for (int x = 0; x < qrData.ModuleMatrix.Count; x++)
-                    {
-                        if (qrData.ModuleMatrix[y][x])
-                        {
-                            canvas.DrawRect(x * pixelsPerModule, y * pixelsPerModule, pixelsPerModule, pixelsPerModule, paint);
-                        }
-                    }
-                }
-            }
-
-            using var ms = new MemoryStream();
-            bitmap.Encode(ms, SKEncodedImageFormat.Png, 100);
-            return ms.ToArray();
+            using var qrCode = new PngByteQRCode(qrData);
+            return qrCode.GetGraphic(20);
         }
     }
 }
