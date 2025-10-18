@@ -82,7 +82,7 @@ namespace LotoApp.Controllers
             if (ticket == null)
                 return NotFound();
 
-            var qrUrl = $"https://localhost:7271/Ticket/{ticket.UUID}";
+            var qrUrl = $"https://lotoapp-fer-web2-firstassignment.onrender.com/Ticket/{ticket.UUID}";
             var qrBytes = _ticketService.GenerateQrCode(qrUrl);
             return File(qrBytes, "image/png");
         }
