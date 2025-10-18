@@ -16,7 +16,7 @@ var host = "localhost";
 var port = "5433";
 var dbname = "LotoDb";
 
-var connectionString = $"Host={host};Port={port};Database={dbname};Username={username};Password={password}";
+var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL")  ?? $"Host={host};Port={port};Database={dbname};Username={username};Password={password}";
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
