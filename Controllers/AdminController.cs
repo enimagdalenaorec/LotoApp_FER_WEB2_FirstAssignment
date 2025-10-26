@@ -50,6 +50,9 @@ namespace LotoApp.Controllers
             if (lastRound.IsActive)
                 return BadRequest(new { error = "Round is still active" });
 
+            if (lastRound.DrawnNumbers == "")
+                lastRound.DrawnNumbers = null;
+
             if (lastRound.DrawnNumbers != null)
                 return BadRequest(new { error = "Numbers already drawn", drawnNumbers = lastRound.DrawnNumbers });
             var ok = await _roundService.StoreResultsAsync(request.Numbers);
