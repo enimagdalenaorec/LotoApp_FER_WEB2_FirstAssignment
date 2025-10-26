@@ -1,4 +1,5 @@
-﻿using LotoApp.Services;
+﻿using LotoApp.Repositories;
+using LotoApp.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +12,12 @@ namespace LotoApp.Controllers
     public class AdminController : ControllerBase
     {
         private readonly RoundService _roundService;
+        private readonly IRoundRepository _roundRepository;
 
-        public AdminController(RoundService roundService)
+        public AdminController(RoundService roundService, IRoundRepository roundRepository)
         {
             _roundService = roundService;
+            _roundRepository = roundRepository;
         }
 
         [HttpPost("new-round")]
@@ -39,6 +42,16 @@ namespace LotoApp.Controllers
         [HttpPost("store-results")]
         public async Task<IActionResult> StoreResults([FromBody] StoreResultsRequest request)
         {
+            var lastRound = await _roundRepository.GetLastRoundAsync();
+
+            if (lastRound == null)
+                return BadRequest(new { error = "No rounds found" });
+
+            if (lastRound.IsActive)
+                return BadRequest(new { error = "Round is still active" });
+
+            if (lastRound.DrawnNumbers != null)
+                return BadRequest(new { error = "Numbers already drawn", drawnNumbers = lastRound.DrawnNumbers });
             var ok = await _roundService.StoreResultsAsync(request.Numbers);
             return ok ? NoContent() : BadRequest();
         }
